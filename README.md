@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Жаңа Activity қосу</title>
+    <title>Launcher Activity орнату</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            background: #f0f2f5;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,67 +23,82 @@
         .container {
             background: #ffffff;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            max-width: 550px;
+            padding: 28px;
         }
 
         h1 {
             color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .task-badge {
+            display: inline-block;
+            background: #E3F2FD;
+            color: #1976D2;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            color: #555;
-            font-size: 14px;
-            margin-bottom: 8px;
+            color: #444;
+            font-size: 13px;
+            margin-bottom: 6px;
             font-weight: 500;
         }
 
-        input[type="text"] {
+        select, input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
             font-family: 'Courier New', monospace;
+            background: #fff;
         }
 
-        input[type="text"]:focus {
+        select:focus, input[type="text"]:focus {
             outline: none;
-            border-color: #4CAF50;
+            border-color: #2196F3;
         }
 
-        .btn-primary {
-            background: #4CAF50;
+        .btn-set {
+            background: #2196F3;
             color: white;
             border: none;
-            padding: 14px 28px;
-            font-size: 16px;
+            padding: 12px 24px;
+            font-size: 14px;
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
-            transition: background 0.3s;
+            margin-top: 8px;
         }
 
-        .btn-primary:hover {
-            background: #45a049;
+        .btn-set:hover {
+            background: #1976D2;
         }
 
-        /* Нәтиже бөлімі */
         .result-section {
-            margin-top: 30px;
+            margin-top: 24px;
             padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
+            border-top: 2px solid #e0e0e0;
             display: none;
         }
 
@@ -91,167 +106,212 @@
             display: block;
         }
 
-        .file-block {
-            background: #263238;
-            border-radius: 4px;
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 6px;
             padding: 16px;
             margin-bottom: 16px;
             overflow-x: auto;
         }
 
-        .file-header {
-            color: #81C784;
+        .file-name {
+            color: #9cdcfe;
             font-size: 12px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: bold;
         }
 
-        .code-content {
-            color: #aed581;
+        .code-line {
+            color: #d4d4d4;
             font-family: 'Courier New', monospace;
             font-size: 13px;
-            line-height: 1.6;
-            white-space: pre-wrap;
+            line-height: 1.8;
         }
 
-        .code-tag { color: #FF8A65; }
-        .code-attr { color: #64B5F6; }
-        .code-value { color: #FFF176; }
-        .code-comment { color: #90A4AE; }
+        .tag { color: #569cd6; }
+        .attr { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .comment { color: #6a9955; }
 
-        /* ҚЫЗҒЫЛТ САРЫ МӘТІН */
-        .success-message {
-            margin-top: 20px;
-            padding: 16px;
-            background: #FFF8E1;
-            border-left: 4px solid #FFB300;
-            border-radius: 4px;
+        /* ҚЫЗҒЫЛТ САРЫ НӘТИЖЕ */
+        .launcher-result {
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .result-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .icon-launcher {
+            width: 40px;
+            height: 40px;
+            background: #FF9800;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
         }
 
         .highlight-text {
             font-size: 18px;
             font-weight: 700;
-            color: #FF6F00;
-            text-shadow: 1px 1px 2px rgba(255, 111, 0, 0.3);
+            color: #E65100;
+            text-shadow: 1px 1px 2px rgba(230, 81, 0, 0.2);
         }
 
-        .info-text {
-            color: #666;
-            font-size: 13px;
+        .result-desc {
+            color: #BF360C;
+            font-size: 14px;
+            line-height: 1.6;
             margin-top: 8px;
+            padding-left: 8px;
+            border-left: 3px solid #FF9800;
         }
 
-        .check-icon {
-            display: inline-flex;
+        .phone-mockup {
+            background: #263238;
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .phone-screen {
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px 20px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 20px;
-            background: #4CAF50;
+            gap: 12px;
+        }
+
+        .app-icon-large {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            border-radius: 50%;
+            font-size: 28px;
+            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+        }
+
+        .app-label {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tap-hint {
+            color: #999;
             font-size: 12px;
-            margin-right: 8px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📝 Жаңа Activity қосу</h1>
-        
+        <span class="task-badge">3-тапсырма</span>
+        <h1>🚀 Launcher Activity орнату</h1>
+        <p class="subtitle">Қосымшаның бастапқы экранын таңдаңыз</p>
+
         <div class="form-group">
-            <label for="activityName">Activity атауы:</label>
-            <input type="text" id="activityName" placeholder="Мысалы: SecondActivity" value="SecondActivity">
+            <label>Бастапқы экран (Launcher):</label>
+            <select id="launcherActivity">
+                <option value="MainActivity">MainActivity</option>
+                <option value="SecondActivity">SecondActivity</option>
+                <option value="SplashActivity">SplashActivity</option>
+                <option value="LoginActivity">LoginActivity</option>
+            </select>
         </div>
 
         <div class="form-group">
-            <label for="packageName">Package атауы:</label>
-            <input type="text" id="packageName" placeholder="com.example.myapp" value="com.example.myapp">
+            <label>Қосымша атауы:</label>
+            <input type="text" id="appName" value="Менің Қосымшам">
         </div>
 
-        <button class="btn-primary" onclick="generateFiles()">
-            Жасау
+        <button class="btn-set" onclick="setLauncher()">
+            Launcher ретінде орнату
         </button>
 
         <div id="resultSection" class="result-section">
-            <!-- Java файлы -->
-            <div class="file-block">
-                <div class="file-header">📄 SecondActivity.java</div>
-                <div class="code-content" id="javaCode"></div>
+            <!-- AndroidManifest.xml -->
+            <div class="code-block">
+                <div class="file-name">📄 AndroidManifest.xml</div>
+                <div class="code-line" id="manifestCode"></div>
             </div>
 
-            <!-- Layout файлы -->
-            <div class="file-block">
-                <div class="file-header">📄 activity_second.xml</div>
-                <div class="code-content" id="layoutCode"></div>
+            <!-- Қызғылт сары нәтиже -->
+            <div class="launcher-result">
+                <div class="result-title">
+                    <div class="icon-launcher">▶</div>
+                    <div class="highlight-text" id="resultText">
+                        Нәтиже: Қосымша осы экраннан ашылады!
+                    </div>
+                </div>
+                <div class="result-desc" id="resultDesc">
+                    MainActivity — қосымшаның бастапқы нүктесі.<br>
+                    Пайдаланшы қосымшаны іске қосқанда бірінші осы экран көрсетіледі.
+                </div>
             </div>
 
-            <!-- Manifest жаңартылуы -->
-            <div class="file-block">
-                <div class="file-header">📄 AndroidManifest.xml (автоматты түрде жаңартылды)</div>
-                <div class="code-content" id="manifestCode"></div>
-            </div>
-
-            <!-- Қызғылт сары мәтін -->
-            <div class="success-message">
-                <p class="highlight-text">
-                    <span class="check-icon">✓</span>
-                    Activity сәтті қосылды! Manifest автоматты түрде жаңартылды.
-                </p>
-                <p class="info-text">
-                    Енді жаңа экранға өту үшін Intent қолданыңыз.
-                </p>
+            <!-- Телефон макеті -->
+            <div class="phone-mockup">
+                <div style="color: #90a4ae; font-size: 11px; margin-bottom: 12px;">📱 Телефон экраны</div>
+                <div class="phone-screen">
+                    <div class="app-icon-large">📱</div>
+                    <div class="app-label" id="phoneAppName">Менің Қосымшам</div>
+                    <div class="tap-hint">Басыңыз → <span id="phoneActivity">MainActivity</span> ашылады</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function generateFiles() {
-            const activityName = document.getElementById('activityName').value || 'SecondActivity';
-            const packageName = document.getElementById('packageName').value || 'com.example.myapp';
+        function setLauncher() {
+            const activity = document.getElementById('launcherActivity').value;
+            const appName = document.getElementById('appName').value || 'Менің Қосымшам';
             
-            // Java коды
-            const javaCode = `<span class="code-tag">package</span> ${packageName};
+            // Manifest кодын генерациялау
+            const manifestCode = `<span class="tag">&lt;activity</span>
+    <span class="attr">android:name</span>=<span class="value">".${activity}"</span>
+    <span class="attr">android:label</span>=<span class="value">"@string/app_name"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;intent-filter&gt;</span>
+        <span class="tag">&lt;action</span> <span class="attr">android:name</span>=<span class="value">"android.intent.action.MAIN"</span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;category</span> <span class="attr">android:name</span>=<span class="value">"android.intent.category.LAUNCHER"</span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/intent-filter&gt;</span>
+<span class="tag">&lt;/activity&gt;</span>
 
-<span class="code-tag">import</span> android.os.Bundle;
-<span class="code-tag">import</span> androidx.appcompat.app.AppCompatActivity;
+<span class="comment">&lt;!-- Нәтиже: ${activity} қосымшаның бастапқы экраны болды --&gt;</span>`;
 
-<span class="code-tag">public class</span> <span class="code-attr">${activityName}</span> <span class="code-tag">extends</span> AppCompatActivity {
-    <span class="code-attr">@Override</span>
-    <span class="code-tag">protected void</span> <span class="code-attr">onCreate</span>(Bundle savedInstanceState) {
-        <span class="code-tag">super</span>.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-    }
-}`;
-
-            // Layout коды
-            const layoutCode = `<span class="code-tag">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="code-tag">&lt;LinearLayout</span> 
-    xmlns:android=<span class="code-value">"http://schemas.android.com/apk/res/android"</span>
-    android:layout_width=<span class="code-value">"match_parent"</span>
-    android:layout_height=<span class="code-value">"match_parent"</span>
-    android:orientation=<span class="code-value">"vertical"</span>
-    android:gravity=<span class="code-value">"center"</span><span class="code-tag">&gt;</span>
-
-    <span class="code-tag">&lt;TextView</span>
-        android:layout_width=<span class="code-value">"wrap_content"</span>
-        android:layout_height=<span class="code-value">"wrap_content"</span>
-        android:text=<span class="code-value">"Бұл жаңа Activity!"</span>
-        android:textSize=<span class="code-value">"24sp"</span> <span class="code-tag">/&gt;</span>
-
-<span class="code-tag">&lt;/LinearLayout&gt;</span>`;
-
-            // Manifest коды
-            const manifestCode = `<span class="code-tag">&lt;activity</span>
-    android:name=<span class="code-value">".${activityName}"</span>
-    android:label=<span class="code-value">"@string/title_${activityName.toLowerCase()}"</span> <span class="code-tag">/&gt;</span>
-
-<span class="code-comment">&lt;!-- Автоматты түрде AndroidManifest.xml-ге қосылды --&gt;</span>`;
-
-            // Кодтарды көрсету
-            document.getElementById('javaCode').innerHTML = javaCode;
-            document.getElementById('layoutCode').innerHTML = layoutCode;
             document.getElementById('manifestCode').innerHTML = manifestCode;
+            
+            // Нәтиже мәтінін жаңарту
+            document.getElementById('resultText').innerHTML = `Нәтиже: Қосымша осы экраннан ашылады!`;
+            document.getElementById('resultDesc').innerHTML = `
+                <strong>${activity}</strong> — қосымшаның бастапқы нүктесі.<br>
+                Пайдаланушы қосымшаны іске қосқанда бірінші осы экран көрсетіледі.<br>
+                <span style="color: #E65100; font-size: 12px; margin-top: 8px; display: block;">
+                    ⚡ MAIN action + LAUNCHER category = Бастапқы экран
+                </span>
+            `;
+            
+            // Телефон макетін жаңарту
+            document.getElementById('phoneAppName').textContent = appName;
+            document.getElementById('phoneActivity').textContent = activity;
             
             // Нәтиже бөлімін көрсету
             document.getElementById('resultSection').classList.add('show');
