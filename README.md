@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecondActivity қосу</title>
+    <title>Батырма → Жаңа Activity</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
 
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,368 +22,409 @@
 
         .container {
             background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: white;
-            padding: 30px;
+            padding: 35px;
             text-align: center;
         }
 
-        .header-icon {
-            width: 80px;
-            height: 80px;
+        .icon-box {
+            width: 70px;
+            height: 70px;
             background: rgba(255,255,255,0.2);
             border-radius: 20px;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 35px;
             backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
         .header h1 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 26px;
+            font-weight: 700;
         }
 
         .header p {
             opacity: 0.9;
-            margin-top: 8px;
-            font-size: 14px;
+            margin-top: 10px;
+            font-size: 15px;
         }
 
-        .content {
+        .demo-area {
             padding: 30px;
-        }
-
-        .step {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 24px;
-            padding: 16px;
             background: #f8f9fa;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
         }
 
-        .step-number {
-            width: 32px;
-            height: 32px;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
+        .phone-screen {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
         }
 
-        .step-content h3 {
-            color: #333;
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-
-        .step-content p {
+        .screen-title {
             color: #666;
             font-size: 13px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-create {
-            width: 100%;
-            padding: 16px;
+        /* БАТЫРМА СТИЛІ */
+        .action-button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 12px;
+            padding: 18px 36px;
             font-size: 16px;
             font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-create:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
         }
 
-        .result-section {
-            display: none;
-            margin-top: 24px;
+        .action-button:active {
+            transform: translateY(-1px);
         }
 
-        .result-section.show {
-            display: block;
-            animation: slideUp 0.5s ease;
+        .action-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .action-button:active::after {
+            width: 300px;
+            height: 300px;
         }
 
-        .code-card {
+        .arrow-animation {
+            margin-top: 25px;
+            font-size: 30px;
+            color: #667eea;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.4s;
+        }
+
+        .arrow-animation.show {
+            opacity: 1;
+            transform: translateY(0);
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .second-screen {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 20px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .second-screen.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .second-screen h3 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .second-screen p {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+        }
+
+        .code-section {
+            padding: 30px;
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-block {
             background: #1e1e1e;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 16px;
-            overflow-x: auto;
         }
 
         .code-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
             border-bottom: 1px solid #333;
         }
 
-        .file-icon {
-            width: 36px;
-            height: 36px;
-            background: #667eea;
-            border-radius: 8px;
+        .code-icon {
+            width: 40px;
+            height: 40px;
+            background: #11998e;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 18px;
+            font-size: 20px;
         }
 
-        .file-name {
+        .code-title {
             color: #fff;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
         }
 
-        .file-path {
+        .code-path {
             color: #888;
             font-size: 12px;
         }
 
-        .code-content {
+        pre {
             color: #d4d4d4;
             font-family: 'Courier New', monospace;
             font-size: 13px;
             line-height: 1.8;
+            overflow-x: auto;
         }
 
         .keyword { color: #569cd6; }
         .string { color: #ce9178; }
         .comment { color: #6a9955; }
         .function { color: #dcdcaa; }
-        .class-name { color: #4ec9b0; }
+        .class { color: #4ec9b0; }
+        .variable { color: #9cdcfe; }
 
         /* ҚЫЗҒЫЛТ САРЫ НӘТИЖЕ */
-        .success-banner {
+        .result-box {
             background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
+            border-radius: 20px;
+            padding: 28px;
             margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(255, 107, 107, 0.3);
         }
 
-        .success-icon {
-            width: 60px;
-            height: 60px;
+        .result-icon {
+            width: 70px;
+            height: 70px;
             background: white;
             border-radius: 50%;
-            margin: 0 auto 16px;
+            margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 35px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
 
-        .success-text {
-            font-size: 22px;
+        .result-text {
+            font-size: 24px;
             font-weight: 800;
-            color: #fff;
+            color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
             line-height: 1.4;
         }
 
-        .success-subtext {
-            color: rgba(255,255,255,0.9);
+        .result-hint {
+            color: rgba(255,255,255,0.95);
             font-size: 14px;
-            margin-top: 8px;
+            margin-top: 12px;
         }
 
-        .nav-hint {
-            background: #f0f0f0;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 16px;
-            font-size: 13px;
-            color: #555;
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
         }
 
-        .nav-code {
-            background: #e0e0e0;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #333;
+        .flow-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .flow-box.from {
+            border: 3px solid #11998e;
+        }
+
+        .flow-box.to {
+            border: 3px solid #f5576c;
+        }
+
+        .flow-arrow {
+            font-size: 30px;
+            color: #667eea;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="header-icon">📱</div>
-            <h1>SecondActivity қосу</h1>
-            <p>Жаңа экран жасау және навигация</p>
+            <div class="icon-box">🔄</div>
+            <h1>Батырма → Жаңа Activity</h1>
+            <p>Intent арқылы экрандар арасында өту</p>
         </div>
 
-        <div class="content">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Java классын жасау</h3>
-                    <p>SecondActivity.java файлы</p>
+        <div class="demo-area">
+            <div class="phone-screen">
+                <div class="screen-title">📱 MainActivity</div>
+                
+                <button class="action-button" onclick="openNewScreen()">
+                    🚀 SecondActivity ашу
+                </button>
+                
+                <div class="arrow-animation" id="arrow">⬇</div>
+                
+                <div class="second-screen" id="secondScreen">
+                    <h3>🎉 SecondActivity</h3>
+                    <p>Жаңа экран сәтті ашылды!</p>
                 </div>
             </div>
+        </div>
 
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Layout дизайны</h3>
-                    <p>activity_second.xml интерфейс</p>
-                </div>
-            </div>
+        <div class="code-section">
+            <h2 class="section-title">
+                <span>💻</span> Java коды
+            </h2>
 
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Manifest тіркеу</h3>
-                    <p>AndroidManifest.xml жаңарту</p>
-                </div>
-            </div>
-
-            <button class="btn-create" onclick="createActivity()">
-                ✨ SecondActivity жасау
-            </button>
-
-            <div id="resultSection" class="result-section">
-                <!-- SecondActivity.java -->
-                <div class="code-card">
-                    <div class="code-header">
-                        <div class="file-icon">☕</div>
-                        <div>
-                            <div class="file-name">SecondActivity.java</div>
-                            <div class="file-path">app/src/main/java/com/example/</div>
-                        </div>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-icon">☕</div>
+                    <div>
+                        <div class="code-title">MainActivity.java</div>
+                        <div class="code-path">onCreate() методында</div>
                     </div>
-                    <div class="code-content">
-<span class="keyword">package</span> com.example.myapp;
+                </div>
+                <pre><span class="comment">// Батырма табу</span>
+<span class="class">Button</span> <span class="variable">btnOpen</span> = findViewById(R.id.<span class="variable">btnOpen</span>);
 
-<span class="keyword">import</span> android.os.Bundle;
-<span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;
-
-<span class="keyword">public class</span> <span class="class-name">SecondActivity</span> <span class="keyword">extends</span> AppCompatActivity {
+<span class="comment">// Басыңда жаңа Activity ашу</span>
+btnOpen.setOnClickListener(<span class="keyword">new</span> <span class="class">View.OnClickListener</span>() {
     <span class="annotation">@Override</span>
-    <span class="keyword">protected void</span> <span class="function">onCreate</span>(Bundle savedInstanceState) {
-        <span class="keyword">super</span>.onCreate(savedInstanceState);
-        setContentView(R.layout.<span class="string">activity_second</span>);
+    <span class="keyword">public void</span> <span class="function">onClick</span>(View v) {
+        <span class="comment">// Intent жасау</span>
+        <span class="class">Intent</span> <span class="variable">intent</span> = <span class="keyword">new</span> <span class="class">Intent</span>(
+            MainActivity.<span class="keyword">this</span>, 
+            SecondActivity.<span class="keyword">class</span>
+        );
+        
+        <span class="comment">// Activity ашу</span>
+        startActivity(intent);
     }
-}</div>
-                </div>
+});</pre>
+            </div>
 
-                <!-- activity_second.xml -->
-                <div class="code-card">
-                    <div class="code-header">
-                        <div class="file-icon">🎨</div>
-                        <div>
-                            <div class="file-name">activity_second.xml</div>
-                            <div class="file-path">app/src/main/res/layout/</div>
-                        </div>
-                    </div>
-                    <div class="code-content">
-<span class="keyword">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="keyword">&lt;LinearLayout</span> 
-    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span>
-    android:layout_width=<span class="string">"match_parent"</span>
-    android:layout_height=<span class="string">"match_parent"</span>
-    android:orientation=<span class="string">"vertical"</span>
-    android:gravity=<span class="string">"center"</span>
-    android:background=<span class="string">"#667eea"</span><span class="keyword">&gt;</span>
-
-    <span class="keyword">&lt;TextView</span>
-        android:layout_width=<span class="string">"wrap_content"</span>
-        android:layout_height=<span class="string">"wrap_content"</span>
-        android:text=<span class="string">"🎉 SecondActivity"</span>
-        android:textColor=<span class="string">"#FFFFFF"</span>
-        android:textSize=<span class="string">"28sp"</span>
-        android:textStyle=<span class="string">"bold"</span> <span class="keyword">/&gt;</span>
-
-    <span class="keyword">&lt;Button</span>
-        android:id=<span class="string">"@+id/btnBack"</span>
-        android:layout_width=<span class="string">"wrap_content"</span>
-        android:layout_height=<span class="string">"wrap_content"</span>
-        android:text=<span class="string">"Артқа"</span>
-        android:layout_marginTop=<span class="string">"20dp"</span> <span class="keyword">/&gt;</span>
-
-<span class="keyword">&lt;/LinearLayout&gt;</span></div>
-                </div>
-
-                <!-- AndroidManifest.xml -->
-                <div class="code-card">
-                    <div class="code-header">
-                        <div class="file-icon">📋</div>
-                        <div>
-                            <div class="file-name">AndroidManifest.xml</div>
-                            <div class="file-path">app/src/main/</div>
-                        </div>
-                    </div>
-                    <div class="code-content">
-<span class="keyword">&lt;activity</span>
-    android:name=<span class="string">".SecondActivity"</span>
-    android:label=<span class="string">"Екінші экран"</span> <span class="keyword">/&gt;</span>
-
-<span class="comment">&lt;!-- Автоматты түрде тіркелді --&gt;</span></div>
-                </div>
-
-                <!-- Қызғылт сары нәтиже -->
-                <div class="success-banner">
-                    <div class="success-icon">🚀</div>
-                    <div class="success-text">
-                        SecondActivity сәтті қосылды!
-                    </div>
-                    <div class="success-subtext">
-                        Енді бір экраннан екіншісіне өтуге болады
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-icon">🎨</div>
+                    <div>
+                        <div class="code-title">activity_main.xml</div>
+                        <div class="code-path">Батырма layout</div>
                     </div>
                 </div>
+                <pre><span class="keyword">&lt;Button</span>
+    android:id=<span class="string">"@+id/btnOpen"</span>
+    android:layout_width=<span class="string">"wrap_content"</span>
+    android:layout_height=<span class="string">"wrap_content"</span>
+    android:text=<span class="string">"SecondActivity ашу"</span>
+    android:backgroundTint=<span class="string">"#667eea"</span> <span class="keyword">/&gt;</span></pre>
+            </div>
 
-                <div class="nav-hint">
-                    <strong>Навигация коды:</strong><br>
-                    <span class="nav-code">Intent intent = new Intent(MainActivity.this, SecondActivity.class);<br>startActivity(intent);</span>
+            <!-- Қызғылт сары нәтиже -->
+            <div class="result-box">
+                <div class="result-icon">✨</div>
+                <div class="result-text">
+                    Нәтиже: Батырма басқанда<br>жаңа Activity ашылады!
+                </div>
+                <div class="result-hint">
+                    Intent = Экрандар арасында хабаршы
+                </div>
+            </div>
+
+            <!-- Схема -->
+            <div class="flow-diagram">
+                <div class="flow-box from">
+                    <div style="font-size: 24px;">📱</div>
+                    <div style="color: #333; font-weight: 600; margin-top: 8px;">MainActivity</div>
+                    <div style="color: #666; font-size: 12px; margin-top: 4px;">Бастапқы экран</div>
+                </div>
+                <div class="flow-arrow">➡️ Intent ➡️</div>
+                <div class="flow-box to">
+                    <div style="font-size: 24px;">🚀</div>
+                    <div style="color: #333; font-weight: 600; margin-top: 8px;">SecondActivity</div>
+                    <div style="color: #666; font-size: 12px; margin-top: 4px;">Жаңа экран</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function createActivity() {
-            document.getElementById('resultSection').classList.add('show');
+        function openNewScreen() {
+            const arrow = document.getElementById('arrow');
+            const secondScreen = document.getElementById('secondScreen');
+            
+            // Стрелканы көрсету
+            arrow.classList.add('show');
+            
+            // Activity ашылу анимациясы
+            setTimeout(() => {
+                secondScreen.classList.add('show');
+            }, 400);
+            
+            // Қайта орнату (қайта басу үшін)
+            setTimeout(() => {
+                arrow.classList.remove('show');
+                secondScreen.classList.remove('show');
+            }, 3000);
         }
     </script>
 </body>
